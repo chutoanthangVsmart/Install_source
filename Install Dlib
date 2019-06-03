@@ -1,0 +1,20 @@
+Download Dlib: https://github.com/davisking/dlib
+
+//Generate static library:
+cd examples
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+
+
+//Generate dynamic library:
+cd dlib
+mkdir build
+cd build
+cmake -DBUILD_SHARED_LIBS=1 ..
+make
+sudo make install
+
+//creates the necessary links and cache (for use by the run-time linker, ld.so) to the most recent shared libraries found in the //directories specified on the command line, in the file /etc/ld.so.conf, and in the trusted directories (/usr/lib and /lib). 
+sudo ldconfig
