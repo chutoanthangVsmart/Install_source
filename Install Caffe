@@ -1,0 +1,43 @@
+# General Dependencies 
+sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev 
+
+# sudo apt-get install libopencv-dev #I already have 3.1.0
+sudo apt-get install libhdf5-serial-dev protobuf-compiler 
+
+# Install Boost Library
+sudo apt-get install --no-install-recommends libboost-all-dev 
+
+# Additional Dependencies
+sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev
+
+#------------------------------------------------------------------
+#Install OpenBLAS
+#Download the development version of OpenBlas
+git clone git://github.com/xianyi/OpenBLAS
+cd OpenBLAS
+make FC=gfortran
+sudo make PREFIX=/usr/local/ install
+
+#------------------------------------------------------------------
+# Download Caffe
+git clone http://github.com/BVLC/caffe.git
+cd caffe
+# Copy the given example make-config file
+cp Makefile.config.example Makefile.config
+
+#------------------------------------------------------------------
+# Edit Makefile.config:
+Set CPU_ONLY := 1
+Set BLAS := open
+Set OPENCV_VERSION := 3 (I’m using 3.1.0)
+
+PYTHON_INCLUDE := /usr/include/python2.7 /usr/local/lib/python2.7/dist-packages/numpy/core/include  
+WITH_PYTHON_LAYER := 1
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial/
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5/serial  
+
+#------------------------------------------------------------------
+# Edit Makefile:
+LIBRARIES += glog gflags protobuf leveldb snappy \
+  lmdb boost_system boost_filesystem hdf5_hl hdf5 m \
+  opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs opencv_videoio
